@@ -42,7 +42,11 @@ states = SimpleNamespace(**{
 })
 
 # list of stocks to trade on
-companies = ['AAPL', 'SPY']
+# companies = ['AAPL', 'SPY']
+companies = ['DOMO', 'TLRY', 'SQ', 'MRO', 'AAPL', 'GM', 'SNAP', 'SHOP',
+                     'SPLK', 'BA', 'AMZN', 'SUI', 'SUN', 'TSLA', 'CGC', 'SPWR',
+                     'NIO', 'CAT', 'MSFT', 'PANW', 'OKTA', 'TWTR', 'TM', 'RTN',
+                     'ATVI', 'GS', 'BAC', 'MS', 'TWLO', 'QCOM', ]
 
 
 def fetch_data(company, days):
