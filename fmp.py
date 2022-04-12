@@ -14,7 +14,7 @@ def __get_jsonparsed_data(url):
 
 
 rsi_url = Template(
-    'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=10&type=rsi&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/technical_indicator/15min/$stock?period=10&type=rsi&apikey=$key')
 ema_url = Template(
     'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=10&type=ema&apikey=$key')
 market_gainer_url = Template(
