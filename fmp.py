@@ -72,4 +72,4 @@ def get_losers():
 
 
 def screen_stocks(marketCapMoreThan=1000, betaMoreThan=1, volumeMoreThan=10000, dividendMoreThan=0, limit=10):
-    return __get_data(stock_types.stock_screener, marketCapMoreThan, betaMoreThan, volumeMoreThan, dividendMoreThan, limit)
+    return __get_data(stock_types.stock_screener, marketCapMoreThan=marketCapMoreThan, betaMoreThan=betaMoreThan, volumeMoreThan=volumeMoreThan, dividendMoreThan=dividendMoreThan, limit=limit)
