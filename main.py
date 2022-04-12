@@ -14,7 +14,7 @@ days = 30  # replace it with your prefered number of days to calculate RSI
 
 # list of stocks to trade on
 companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
-             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM']
+             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']
 
 
 def buyAndSell(company, days):
