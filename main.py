@@ -4,6 +4,8 @@ from alpaca import calculate_moving_average, calculate_macd, fetch_data, calcula
 
 import time
 import fmp
+import sms
+
 rsi_timeframe = 14  # replace it with your prefered timeframe for RSI
 
 # company = "AAPL"  # "AAPL" #replace it with your prefered company symbol from: https://www.nyse.com/listings_directory/stock
@@ -43,9 +45,11 @@ def buyAndSell(company, days):
 
         if trade_state == states.buy:
             buy_stock(company, shares)
+            sms.send_sms("BUY " + company + " " + str(shares))
 
         elif trade_state == states.sell:
             sell_stock(company, shares)
+            sms.send_sms("SELL " + company + " " + str(shares))
 
         else:
             print("The RSI is {} and it's between the given thresholds: {} and {}, so we wait.".format(
