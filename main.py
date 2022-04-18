@@ -3,7 +3,7 @@ from helpers import states, checkRSI, checkMA, oversold_threshold, overbought_th
 from alpaca import calculate_moving_average, calculate_macd, fetch_data, calculate_rsi, sell_stock, buy_stock, get_is_market_open
 
 import time
-
+import fmp
 rsi_timeframe = 14  # replace it with your prefered timeframe for RSI
 
 # company = "AAPL"  # "AAPL" #replace it with your prefered company symbol from: https://www.nyse.com/listings_directory/stock
@@ -60,8 +60,9 @@ while True:
     market_is_open = get_is_market_open()
     if market_is_open:
         print("market_is_open")
-        for company in companies:
-            buyAndSell(company, days)
+        screened_stocks = fmp.screen_stocks()
+        for stock in screened_stocks:
+            buyAndSell(stock["symbol"], days)
     else:
         print("Market is closed")
 

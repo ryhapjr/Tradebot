@@ -22,7 +22,7 @@ market_gainer_url = Template(
 market_loser_url = Template(
     'https://financialmodelingprep.com/api/v3/stock_market/losers?apikey=$key')
 stock_screener_url = Template(
-    'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=$marketCapMoreThan&betaMoreThan=$betaMoreThan&volumeMoreThan=$volumeMoreThan&dividendMoreThan=$dividendMoreThan&limit=$limit&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=$marketCapMoreThan&marketCapLowerThan=$marketCapLowerThan&betaLowerThan=$betaLowerThan&volumeMoreThan=$volumeMoreThan&dividendMoreThan=$dividendMoreThan&dividendLowerThan=$dividendLowerThan&priceMoreThan=$priceMoreThan&isActivelyTrading=True&limit=$limit&apikey=$key')
 
 
 stock_types = SimpleNamespace(**{
@@ -71,5 +71,5 @@ def get_losers():
     return __get_data(stock_types.market_loser)
 
 
-def screen_stocks(marketCapMoreThan=1000, betaMoreThan=1, volumeMoreThan=10000, dividendMoreThan=0, limit=10):
-    return __get_data(stock_types.stock_screener, marketCapMoreThan=marketCapMoreThan, betaMoreThan=betaMoreThan, volumeMoreThan=volumeMoreThan, dividendMoreThan=dividendMoreThan, limit=limit)
+def screen_stocks(marketCapMoreThan=3000000000, marketCapLowerThan=10000000000, betaLowerThan=1, volumeMoreThan=1000000, dividendMoreThan=2, dividendLowerThan=4, priceMoreThan=50, limit=10):
+    return __get_data(stock_types.stock_screener, marketCapMoreThan=marketCapMoreThan, marketCapLowerThan=marketCapLowerThan, betaLowerThan=betaLowerThan, volumeMoreThan=volumeMoreThan, dividendLowerThan=dividendLowerThan, dividendMoreThan=dividendMoreThan, priceMoreThan=priceMoreThan, limit=limit)

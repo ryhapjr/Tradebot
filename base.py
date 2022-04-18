@@ -6,5 +6,8 @@ import alpaca
 
 
 # print(fmp.get_rsi('AAPL'))
-
-print(fmp.screen_stocks())
+def handle_purchase():
+    # screened_stocks = fmp.screen_stocks()
+    # for stock in screened_stocks:
+    #    buyAndSell(stock["symbol"], days)
+    pass
