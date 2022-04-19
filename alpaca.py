@@ -1,8 +1,8 @@
 from alpaca_trade_api.rest import REST, TimeFrame
 import config
-import talib as ta
+# import talib as ta
 from datetime import datetime, timedelta
-import numpy as np
+# import numpy as np
 
 API_KEY = config.API_KEY
 SECRET_KEY = config.API_SECRET_KEY
@@ -69,39 +69,39 @@ def sell_stock(company, shares=1):
             "We hit the threshold to sell, but we don't have anything to sell. Next time maybe.")
 
 
-def calculate_moving_average(company, days):
-    try:
-        market_data = fetch_data(company, days * 2)
-        if market_data == None:
-            return 0
-        close_prices = np.array(market_data.df['close'])
-        sma = ta.SMA(close_prices, days)[-1]
-        return sma
-    except Exception as e:
-        print(e)
-        return 0
+# def calculate_moving_average(company, days):
+#     try:
+#         market_data = fetch_data(company, days * 2)
+#         if market_data == None:
+#             return 0
+#         close_prices = np.array(market_data.df['close'])
+#         sma = ta.SMA(close_prices, days)[-1]
+#         return sma
+#     except Exception as e:
+#         print(e)
+#         return 0
 
 
-def calculate_rsi(data, timeframe):
-    np_data = np.array(data)  # Convert to numpy array
-    rsis = ta.RSI(np_data, timeframe)
-    return rsis[-1]
+# def calculate_rsi(data, timeframe):
+#     np_data = np.array(data)  # Convert to numpy array
+#     rsis = ta.RSI(np_data, timeframe)
+#     return rsis[-1]
 
 
-def calculate_macd(company, days):
-    try:
-        market_data = fetch_data(company, days)
-        if market_data == None:
-            return 0
-        close_prices = np.array(market_data.df['close'])
+# def calculate_macd(company, days):
+#     try:
+#         market_data = fetch_data(company, days)
+#         if market_data == None:
+#             return 0
+#         close_prices = np.array(market_data.df['close'])
 
-        macd, macdsignal, macdhist = ta.MACD(
-            close_prices, fastperiod=12, slowperiod=26, signalperiod=9)
-        # print(macd[-1])
-        # print(macdsignal[-1])
-        # print(macdhist[-1])
-        return macdhist[-1]
+#         macd, macdsignal, macdhist = ta.MACD(
+#             close_prices, fastperiod=12, slowperiod=26, signalperiod=9)
+#         # print(macd[-1])
+#         # print(macdsignal[-1])
+#         # print(macdhist[-1])
+#         return macdhist[-1]
 
-    except Exception as e:
-        print(e)
-        return 0
+#     except Exception as e:
+#         print(e)
+#         return 0
