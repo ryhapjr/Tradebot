@@ -63,15 +63,14 @@ def buyAndSell(company, days):
 
 
 print("I am ready to trade")
-while True:
-    market_is_open = get_is_market_open()
-    if market_is_open:
-        print("market_is_open")
-        screened_stocks = fmp.screen_stocks()
-        for stock in screened_stocks:
-            buyAndSell(stock["symbol"], days)
-    else:
-        print("Market is closed")
 
-    print("I am waiting")
-    time.sleep(60)
+market_is_open = get_is_market_open()
+if market_is_open:
+    print("market_is_open")
+    screened_stocks = fmp.screen_stocks()
+    for stock in screened_stocks:
+        buyAndSell(stock["symbol"], days)
+else:
+    print("Market is closed")
+
+print("I am done")
