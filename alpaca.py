@@ -11,6 +11,7 @@ BASE_URL = config.BASE_URL  # base URL for paper trading
 api = REST(key_id=API_KEY, secret_key=SECRET_KEY, base_url=BASE_URL)
 
 api_time_format = '%Y-%m-%d'
+message_temp = '{}\n'
 
 
 def calculate_start_end(days):
@@ -42,7 +43,7 @@ def get_is_market_open():
     return api.get_clock().is_open
 
 
-def buy_stock(company, shares=1):
+def buy_stock(company, logger, shares=1, ):
     try:
         orders = api.list_orders(symbols=[company])
 
@@ -50,23 +51,34 @@ def buy_stock(company, shares=1):
             api.get_position(company)
             print(
                 "We hit the threshold to buy, but we already have some shares, so we won't buy more.")
+            logger.write(message_temp.format(
+                "We hit the threshold to buy, but we already have some shares, so we won't buy more."))
+
     except Exception as e:
-        api.submit_order(symbol=company, qty=shares,
-                         side="buy", type='market', time_in_force='gtc')
+        t = api.submit_order(symbol=company, qty=shares,
+                             side="buy", type='market', time_in_force='gtc')
+
         print('We submitted the order to buy {} {} shares.'.format(
             shares, company))
+        logger.write(message_temp.format(
+            'We submitted the order to buy {} {} shares.'.format(shares, company)))
 
 
-def sell_stock(company, shares=1):
+def sell_stock(company, logger, shares=1, ):
     try:
         api.get_position(company)
-        api.submit_order(
+        t = api.submit_order(
             symbol=company, qty=shares, side='sell', type='market', time_in_force='gtc')
+
         print('We submitted an order to sell {} {} shares.'.format(
             shares, company))
+        logger.write(message_temp.format(
+            'We submitted an order to sell {} {} shares.'.format(shares, company)))
     except:
         print(
             "We hit the threshold to sell, but we don't have anything to sell. Next time maybe.")
+        logger.write(message_temp.format(
+            "We hit the threshold to sell, but we don't have anything to sell. Next time maybe."))
 
 
 # def calculate_moving_average(company, days):
