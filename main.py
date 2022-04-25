@@ -80,8 +80,13 @@ if market_is_open:
     print("market_is_open")
     logfile.write(message_temp.format("market_is_open"))
     screened_stocks = fmp.screen_stocks()
-    for stock in screened_stocks:
-        buyAndSell(stock["symbol"], days)
+    if screened_stocks == None:
+        print("No stocks to trade")
+        logfile.write(message_temp.format("No stocks to trade"))
+    else:
+        for stock in screened_stocks:
+            buyAndSell(stock["symbol"], days)
+
 else:
     print("Market is closed")
     logfile.write(message_temp.format("Market is closed"))

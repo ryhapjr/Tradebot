@@ -1,3 +1,4 @@
+from ast import Try
 from urllib.request import urlopen
 import json
 import config
@@ -8,9 +9,14 @@ STOCK_API_KEY = config.STOCK_API_KEY
 
 
 def __get_jsonparsed_data(url):
-    response = urlopen(url)
-    data = response.read().decode("utf-8")
-    return json.loads(data)
+    try:
+        response = urlopen(url)
+        data = response.read().decode("utf-8")
+        return json.loads(data)
+    except Exception as e:
+        print("Error fetching data from url %s" % url)
+        print(e.message)
+        return None
 
 
 rsi_url = Template(
