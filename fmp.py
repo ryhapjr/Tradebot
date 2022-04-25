@@ -78,4 +78,6 @@ def get_losers():
 
 
 def screen_stocks(marketCapMoreThan=3000000000, marketCapLowerThan=10000000000, betaLowerThan=1, volumeMoreThan=1000000, dividendMoreThan=2, dividendLowerThan=4, priceMoreThan=50, limit=10):
-    return __get_data(stock_types.stock_screener, marketCapMoreThan=marketCapMoreThan, marketCapLowerThan=marketCapLowerThan, betaLowerThan=betaLowerThan, volumeMoreThan=volumeMoreThan, dividendLowerThan=dividendLowerThan, dividendMoreThan=dividendMoreThan, priceMoreThan=priceMoreThan, limit=limit)
+    return __get_data(stock_types.stock_screener, marketCapMoreThan=marketCapMoreThan, marketCapLowerThan=marketCapLowerThan, betaLowerThan=betaLowerThan, volumeMoreThan=volumeMoreThan, dividendLowerThan=dividendLowerThan, dividendMoreThan=dividendMoreThan, priceMoreThan=priceMoreThan,
+                      isActivelyTrading=True, isETF=True,
+                      limit=limit)
