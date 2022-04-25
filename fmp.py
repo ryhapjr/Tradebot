@@ -15,7 +15,7 @@ def __get_jsonparsed_data(url):
         return json.loads(data)
     except Exception as e:
         print("Error fetching data from url %s" % url)
-        print(e.message)
+        # print(e.message)
         return None
 
 
