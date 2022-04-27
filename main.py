@@ -10,17 +10,12 @@ from datetime import datetime
 logfile = open('log.txt', 'a+')
 message_temp = '{}\n'
 
-rsi_timeframe = 14  # replace it with your prefered timeframe for RSI
-
-# company = "AAPL"  # "AAPL" #replace it with your prefered company symbol from: https://www.nyse.com/listings_directory/stock
 shares = 1  # replace it with your prefered number of shares to buy/sell
-data = []  # should be reseted every time you start the bot
-days = 30  # replace it with your prefered number of days to calculate RSI
 
 
 # list of stocks to trade on
 companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
-             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']
+             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']  # from: https://www.nyse.com/listings_directory/stock
 
 
 def buyAndSell(company):
@@ -57,9 +52,6 @@ def buyAndSell(company):
             rsi, oversold_threshold, overbought_threshold))
         logfile.write(message_temp.format("The RSI is {} and it's between the given thresholds: {} and {}, so we wait.".format(
             rsi, oversold_threshold, overbought_threshold)))
-    # else:
-    #     print("Not enough prices to calculate RSI and start trading:",
-    #           len(data), "<=", rsi_timeframe)
 
 
 print("I am ready to trade " + str(datetime.today()))
@@ -80,7 +72,7 @@ if market_is_open:
         logfile.write(message_temp.format("No stocks to trade"))
     else:
         for stock in screened_stocks:
-            buyAndSell(stock["symbol"], days)
+            buyAndSell(stock["symbol"])
 
 else:
     print("Market is closed")
