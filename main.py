@@ -1,8 +1,8 @@
-from helpers import states, checkRSI, oversold_threshold, overbought_threshold
+from helpers import states, checkRSI, oversold_threshold, overbought_threshold, checKMACD, checkATR, checkMA
 
 from alpaca import sell_stock, buy_stock, get_is_market_open
 
-import time
+import aac
 import fmp
 import sms
 from datetime import datetime
@@ -23,47 +23,40 @@ companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
              'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']
 
 
-def buyAndSell(company, days):
+def buyAndSell(company):
     print("Checking Price for " + company)
     logfile.write(message_temp.format("Checking Price for " + company))
 
-    # ma = calculate_moving_average(company, 200)
-    # ma_50 = calculate_moving_average(company, 50)
-    # msc = calculate_macd(company, 60)
+    ma_200 = fmp.get_sma(company, 200)
+    ma_50 = fmp.get_sma(company, 50)
+    print('ma_200: ' + str(ma_200))
+    print('ma_50: ' + str(ma_50))
+    ma_state = checkMA(ma_50, ma_200)
+    print('ma_state: ' + str(ma_state))
 
-    # ma = fmp.get_ema(company)
-    # ma_50 = fmp.get_ema(company)
-    # print(ma, ma_50)
-    # mast = checkMA(ma, ma_50)
+    atr = aac.get_atr(company)
+    print('atr: ' + str(atr))
+    atr_state = checkATR(atr, ma_50)
+    print('atr_state: ' + str(atr_state))
 
-    # market_data = fetch_data(company, days)
-    # if market_data == None:
-    #     print("No data for " + company)
-    #     return
+    rsi = fmp.get_rsi(company)
+    print('rsi: ' + str(rsi))
+    rsi_state = checkRSI(rsi)
+    print('rsi_state: ' + str(rsi_state))
 
-    # data = market_data.df['close']
-
-    # if len(data) >= rsi_timeframe:
-    # rsi_now = calculate_rsi(data, rsi_timeframe)
-    rsi_data = fmp.get_rsi(company)
-    rsi_now = rsi_data[0]['rsi']
-    trade_state = checkRSI(rsi_now)
-
-    print(rsi_now, trade_state)
-
-    if trade_state == states.buy:
+    if rsi_state == states.buy:
         buy_stock(company, logfile, shares, )
         sms.send_sms("BUY " + company + " " + str(shares))
 
-    elif trade_state == states.sell:
+    elif rsi_state == states.sell:
         sell_stock(company, logfile, shares)
         sms.send_sms("SELL " + company + " " + str(shares))
 
     else:
         print("The RSI is {} and it's between the given thresholds: {} and {}, so we wait.".format(
-            rsi_now, oversold_threshold, overbought_threshold))
+            rsi, oversold_threshold, overbought_threshold))
         logfile.write(message_temp.format("The RSI is {} and it's between the given thresholds: {} and {}, so we wait.".format(
-            rsi_now, oversold_threshold, overbought_threshold)))
+            rsi, oversold_threshold, overbought_threshold)))
     # else:
     #     print("Not enough prices to calculate RSI and start trading:",
     #           len(data), "<=", rsi_timeframe)
@@ -80,6 +73,8 @@ if market_is_open:
     print("market_is_open")
     logfile.write(message_temp.format("market_is_open"))
     screened_stocks = fmp.screen_stocks()
+    # for stock in companies:
+    #     buyAndSell(stock)
     if screened_stocks == None:
         print("No stocks to trade")
         logfile.write(message_temp.format("No stocks to trade"))
