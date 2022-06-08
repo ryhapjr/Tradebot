@@ -82,4 +82,5 @@ stock_types = SimpleNamespace(**{
     'market_loser': 'market_loser',
     'stock_screener': 'stock_screener',
     'price': 'price',
+    'macd': 'macd'
 })

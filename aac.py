@@ -21,3 +21,14 @@ def get_atr(stock, period=14):
     dataKey = str(yesterday)
     atr = data['Technical Analysis: ATR'][dataKey]['ATR']
     return float(atr)
+
+
+def get_macd(stock):
+    data = __get_data(stock_types.macd, symbol=stock)
+    if data is None:
+        return 0
+    today = date.today()
+    yesterday = today - timedelta(days=1)
+    dataKey = str(yesterday)
+    macd = data['Technical Analysis: MACDEXT'][dataKey]['MACD']
+    return float(macd)

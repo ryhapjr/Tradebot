@@ -28,10 +28,11 @@ def buyAndSell(company):
     sma_100 = fmp.get_sma(company, 100)
     sma_200 = fmp.get_sma(company, 200)
     rsi = fmp.get_rsi(company)
-    macd = 1  # fmp.get_macd(company)
+    macd = aac.get_macd(company)
     price = fmp.get_price(company)
     print(ema_21, sma_20, sma_50,
           sma_100, sma_200, rsi, macd, price)
+
     should_buy = checkToBuy(ema_21, sma_20, sma_50,
                             sma_100, sma_200, rsi, macd)
 
@@ -59,7 +60,7 @@ print("I am ready to trade " + str(datetime.today()))
 logfile.write(message_temp.format(
     "I am ready to trade " + str(datetime.today())))
 
-market_is_open = get_is_market_open()
+market_is_open = True  # get_is_market_open()
 
 
 if market_is_open:

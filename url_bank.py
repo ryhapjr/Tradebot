@@ -20,6 +20,8 @@ stock_screener_url = Template(
 
 atr_url = Template(
     'https://www.alphavantage.co/query?function=ATR&symbol=$symbol&interval=daily&time_period=$period&apikey=$key')
+macd_url = Template(
+    'https://www.alphavantage.co/query?function=MACDEXT&symbol=$symbol&interval=daily&series_type=close&&apikey=$key')
 
 
 url_by_type = {
@@ -30,7 +32,8 @@ url_by_type = {
     stock_types.stock_screener: stock_screener_url,
     stock_types.sma: sma_url,
     stock_types.atr: atr_url,
-    stock_types.price: price_url
+    stock_types.price: price_url,
+    stock_types.macd: macd_url
 }
 
 
