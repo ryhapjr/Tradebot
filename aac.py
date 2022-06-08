@@ -14,8 +14,10 @@ def __get_data(type, **args):
 
 def get_atr(stock, period=14):
     data = __get_data(stock_types.atr, symbol=stock, period=period)
+    if data is None:
+        return 0
     today = date.today()
     yesterday = today - timedelta(days=1)
     dataKey = str(yesterday)
     atr = data['Technical Analysis: ATR'][dataKey]['ATR']
-    return atr
+    return float(atr)

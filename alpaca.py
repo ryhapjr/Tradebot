@@ -43,7 +43,7 @@ def get_is_market_open():
     return api.get_clock().is_open
 
 
-def buy_stock(company, logger, shares=1, ):
+def buy_stock(company, logger, sms_send, shares=1, ):
     try:
         orders = api.list_orders(symbols=[company])
 
@@ -62,9 +62,10 @@ def buy_stock(company, logger, shares=1, ):
             shares, company))
         logger.write(message_temp.format(
             'We submitted the order to buy {} {} shares.'.format(shares, company)))
+        sms_send()
 
 
-def sell_stock(company, logger, shares=1, ):
+def sell_stock(company, logger, sms_send, shares=1):
     try:
         api.get_position(company)
         t = api.submit_order(
@@ -74,6 +75,7 @@ def sell_stock(company, logger, shares=1, ):
             shares, company))
         logger.write(message_temp.format(
             'We submitted an order to sell {} {} shares.'.format(shares, company)))
+        sms_send()
     except:
         print(
             "We hit the threshold to sell, but we don't have anything to sell. Next time maybe.")

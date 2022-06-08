@@ -18,15 +18,24 @@ def get_rsi(stock):
     return None
 
 
-def get_ema(stock):
-    data = __get_data(stock_types.ema, stock=stock)
+def get_ema(stock, period=14):
+    data = __get_data(stock_types.ema, stock=stock, period=period)
+    if data != None:
+        return data[0]['ema']
     return data
 
 
-def get_sma(stock, period):
+def get_sma(stock, period=14):
     data = __get_data(stock_types.sma, stock=stock, period=period)
     if data != None:
         return data[0]['sma']
+    return data
+
+
+def get_price(stock):
+    data = __get_data(stock_types.price, stock=stock)
+    if data != None:
+        return data[0]['price']
     return data
 
 

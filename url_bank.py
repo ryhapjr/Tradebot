@@ -6,9 +6,11 @@ rsi_url = Template(
 
 sma_url = Template(
     'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=$period&type=sma&apikey=$key')
+price_url = Template(
+    'https://financialmodelingprep.com/api/v3/quote-short/$stock?apikey=$key')
 
 ema_url = Template(
-    'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=10&type=ema&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=$period&type=ema&apikey=$key')
 market_gainer_url = Template(
     'https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=$key')
 market_loser_url = Template(
@@ -27,7 +29,8 @@ url_by_type = {
     stock_types.market_loser: market_loser_url,
     stock_types.stock_screener: stock_screener_url,
     stock_types.sma: sma_url,
-    stock_types.atr: atr_url
+    stock_types.atr: atr_url,
+    stock_types.price: price_url
 }
 
 
