@@ -60,7 +60,7 @@ print("I am ready to trade " + str(datetime.today()))
 logfile.write(message_temp.format(
     "I am ready to trade " + str(datetime.today())))
 
-market_is_open = get_is_market_open()
+market_is_open = True  # get_is_market_open()
 
 
 if market_is_open:
