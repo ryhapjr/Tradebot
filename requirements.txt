@@ -1,0 +1,3 @@
+python-decouple
+alpaca_trade_api
+twilio

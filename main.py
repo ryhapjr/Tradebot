@@ -1,62 +1,86 @@
-import config
-from config import *
-import alpaca_trade_api as tradeapi
-import numpy as np
-import time
+from helpers import oversold_threshold, overbought_threshold, checkToBuy, checkToSell
 
-API_KEY = config.API_KEY
-SECRET_KEY = config.API_SECRET_KEY
-BASE_URL = config.BASE_URL #base URL for paper trading
-api = tradeapi.REST(key_id=API_KEY, secret_key=SECRET_KEY, base_url=BASE_URL) #For real trading, do not enter a base URL
+from alpaca import sell_stock, buy_stock, get_is_market_open
 
-symb = "SPY"
-pos_held = False
+import aac
+import fmp
+import sms
+from datetime import datetime
 
-while True:
-    print("")
-    print("Checking Price")
+logfile = open('log.txt', 'a+')
+message_temp = '{}\n'
 
-    market_data = api.get_barset(symb,'minute', limit=5) #Get one bar object for each of the past 5 minutes
-
-    close_list = [] # This array will store all the closing prices from the last 5 minutes
-    for bar in market_data[symb]:
-        close_list.append(bar.c) #bar.c is the closing price of that bar's time interval
-
-    close_list = np.array(close_list, dtype=np.float64) # Convert to numpy array
-    ma = np.mean(close_list)
-    last_price = close_list[4] #Most recent closing price
-
-    print("Moving Average: " + str(ma))
-    print("Last Price: " + str(last_price))
-
-    if ma + 0.1 < last_price and not pos_held:
-        print("Buy")
-#Buy a stock
-
-        api.submit_order(
-            symbol='SPY',# Replace with a ticker of the stock you want to buy
-            qty=1,
-            side='buy',
-            type='market',
-            time_in_force='gtc' #Good 'til cancelled
-
-    )
-        pos_held = True
-    elif ma - 0.1 > last_price and pos_held: # If MA is more than 10 cents above price, and we already bought
-        print("Sell")
-#Sell a stock
-        api.submit_order(
-            symbol='SPY',# Replace with a ticker of the stock you want to buy
-            qty=1,
-            side='sell',
-            type='market',
-            time_in_force='gtc' #Good 'til cancelled
-        )
-        pos_held = False
-
-    time.sleep(60)
+shares = 1  # replace it with your prefered number of shares to buy/sell
 
 
+# list of stocks to trade on
+companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
+             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']  # from: https://www.nyse.com/listings_directory/stock
 
 
+def buyAndSell(company):
+    print("Checking Price for " + company)
+    logfile.write(message_temp.format("Checking Price for " + company))
 
+    ema_21 = fmp.get_ema(company, 21)
+    sma_20 = fmp.get_sma(company, 20)
+    sma_50 = fmp.get_sma(company, 50)
+    sma_100 = fmp.get_sma(company, 100)
+    sma_200 = fmp.get_sma(company, 200)
+    rsi = fmp.get_rsi(company)
+    macd = aac.get_macd(company)
+    price = fmp.get_price(company)
+    print(ema_21, sma_20, sma_50,
+          sma_100, sma_200, rsi, macd, price)
+
+    should_buy = checkToBuy(ema_21, sma_20, sma_50,
+                            sma_100, sma_200, rsi, macd)
+
+    should_sell = checkToSell(price, sma_50)
+
+    def send_buy():
+        return sms.send_sms("BUY " + company + " " + str(shares))
+
+    def send_sell():
+        return sms.send_sms("SELL " + company + " " + str(shares))
+
+    if should_buy:
+        buy_stock(company, logfile, send_buy, shares)
+
+    elif should_sell:
+        sell_stock(company, logfile, send_sell, shares)
+
+    else:
+        print("We cannot buy or sell {} at the moment.".format(company))
+        logfile.write(message_temp.format(
+            "We cannot buy or sell {} at the moment.".format(company)))
+
+
+print("I am ready to trade " + str(datetime.today()))
+logfile.write(message_temp.format(
+    "I am ready to trade " + str(datetime.today())))
+
+market_is_open = True  # get_is_market_open()
+
+
+if market_is_open:
+    print("market_is_open")
+    logfile.write(message_temp.format("market_is_open"))
+    screened_stocks = fmp.screen_stocks()
+    # for stock in companies:
+    #     buyAndSell(stock)
+    if screened_stocks == None:
+        print("No stocks to trade")
+        logfile.write(message_temp.format("No stocks to trade"))
+    else:
+        for stock in screened_stocks:
+            buyAndSell(stock["symbol"])
+
+else:
+    print("Market is closed")
+    logfile.write(message_temp.format("Market is closed"))
+
+print("I am done")
+logfile.write(message_temp.format("I am done" + "\n"))
+
+logfile.close()
