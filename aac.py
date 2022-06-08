@@ -28,7 +28,7 @@ def get_macd(stock):
     if data is None:
         return 0
 
-    if data['Technical Analysis: MACDEXT'] is None:
+    if 'Technical Analysis: MACDEXT' not in data:
         return 0
     today = date.today()
     yesterday = today - timedelta(days=1)
