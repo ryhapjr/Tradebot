@@ -13,30 +13,30 @@ def __get_data(type, **args):
 
 def get_rsi(stock):
     data = __get_data(stock_types.rsi, stock=stock)
-    if data != None:
+    if data != None and len(data) > 0:
         return data[0]['rsi']
-    return None
+    return 0
 
 
 def get_ema(stock, period=14):
     data = __get_data(stock_types.ema, stock=stock, period=period)
-    if data != None:
+    if data != None and len(data) > 0:
         return data[0]['ema']
-    return data
+    return 0
 
 
 def get_sma(stock, period=14):
     data = __get_data(stock_types.sma, stock=stock, period=period)
-    if data != None:
+    if data != None and len(data) > 0:
         return data[0]['sma']
-    return data
+    return 0
 
 
 def get_price(stock):
     data = __get_data(stock_types.price, stock=stock)
-    if data != None:
+    if data != None and len(data) > 0:
         return data[0]['price']
-    return data
+    return 0
 
 
 def get_gainers():

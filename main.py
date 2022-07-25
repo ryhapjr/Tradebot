@@ -14,8 +14,10 @@ shares = 1  # replace it with your prefered number of shares to buy/sell
 
 
 # list of stocks to trade on
-companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
-             'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']  # from: https://www.nyse.com/listings_directory/stock
+# companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
+#              'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']  # from: https://www.nyse.com/listings_directory/stock
+
+companies = ['AAPL', 'NVDA', 'TSLA', 'LLY', 'XOM']
 
 
 def buyAndSell(company):
@@ -67,14 +69,14 @@ if market_is_open:
     print("market_is_open")
     logfile.write(message_temp.format("market_is_open"))
     screened_stocks = fmp.screen_stocks()
-    # for stock in companies:
-    #     buyAndSell(stock)
-    if screened_stocks == None:
-        print("No stocks to trade")
-        logfile.write(message_temp.format("No stocks to trade"))
-    else:
-        for stock in screened_stocks:
-            buyAndSell(stock["symbol"])
+    for stock in companies:
+        buyAndSell(stock)
+    # if screened_stocks == None:
+    #     print("No stocks to trade")
+    #     logfile.write(message_temp.format("No stocks to trade"))
+    # else:
+    #     for stock in screened_stocks:
+    #         buyAndSell(stock["symbol"])
 
 else:
     print("Market is closed")

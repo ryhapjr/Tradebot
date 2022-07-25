@@ -1,5 +1,5 @@
 import config
-from helpers import get_jsonparsed_data, stock_types
+from helpers import get_jsonparsed_data, stock_types, prev_weekday
 from url_bank import get_url
 from datetime import date, timedelta
 
@@ -30,8 +30,7 @@ def get_macd(stock):
 
     if 'Technical Analysis: MACDEXT' not in data:
         return 0
-    today = date.today()
-    yesterday = today - timedelta(days=1)
+    yesterday = prev_weekday()
     dataKey = str(yesterday)
     macd = data['Technical Analysis: MACDEXT'][dataKey]['MACD']
     return float(macd)

@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 from urllib.request import urlopen
 import json
+from datetime import date, timedelta
 
 states = SimpleNamespace(**{
     'buy': 'BUY',
@@ -84,3 +85,11 @@ stock_types = SimpleNamespace(**{
     'price': 'price',
     'macd': 'macd'
 })
+
+
+def prev_weekday():
+    adate = date.today()
+    adate -= timedelta(days=1)
+    while adate.weekday() > 4:  # Mon-Fri are 0-4
+        adate -= timedelta(days=1)
+    return adate
