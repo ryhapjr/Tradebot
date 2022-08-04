@@ -2,15 +2,15 @@ from string import Template
 from helpers import stock_types
 
 rsi_url = Template(
-    'https://financialmodelingprep.com/api/v3/technical_indicator/15min/$stock?period=10&type=rsi&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/technical_indicator/1min/$stock?period=10&type=rsi&apikey=$key')
 
 sma_url = Template(
-    'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=$period&type=sma&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/technical_indicator/1min/$stock?period=$period&type=sma&apikey=$key')
 price_url = Template(
     'https://financialmodelingprep.com/api/v3/quote-short/$stock?apikey=$key')
 
 ema_url = Template(
-    'https://financialmodelingprep.com/api/v3/technical_indicator/daily/$stock?period=$period&type=ema&apikey=$key')
+    'https://financialmodelingprep.com/api/v3/technical_indicator/1min/$stock?period=$period&type=ema&apikey=$key')
 market_gainer_url = Template(
     'https://financialmodelingprep.com/api/v3/stock_market/gainers?apikey=$key')
 market_loser_url = Template(
@@ -19,9 +19,9 @@ stock_screener_url = Template(
     'https://financialmodelingprep.com/api/v3/stock-screener?marketCapMoreThan=$marketCapMoreThan&marketCapLowerThan=$marketCapLowerThan&betaLowerThan=$betaLowerThan&volumeMoreThan=$volumeMoreThan&dividendMoreThan=$dividendMoreThan&dividendLowerThan=$dividendLowerThan&priceMoreThan=$priceMoreThan&isActivelyTrading=True&limit=$limit&apikey=$key')
 
 atr_url = Template(
-    'https://www.alphavantage.co/query?function=ATR&symbol=$symbol&interval=daily&time_period=$period&apikey=$key')
+    'https://www.alphavantage.co/query?function=ATR&symbol=$symbol&interval=1min&time_period=$period&apikey=$key')
 macd_url = Template(
-    'https://www.alphavantage.co/query?function=MACDEXT&symbol=$symbol&interval=daily&series_type=close&&apikey=$key')
+    'https://www.alphavantage.co/query?function=MACDEXT&symbol=$symbol&interval=1min&series_type=close&&apikey=$key')
 
 
 url_by_type = {

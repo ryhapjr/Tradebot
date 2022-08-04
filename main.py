@@ -17,7 +17,8 @@ shares = 1  # replace it with your prefered number of shares to buy/sell
 # companies = ['AAPL', 'GOOGL', 'GOOG', 'AMZN',
 #              'TSLA', 'FB', 'NVDA', 'TWTR', 'TSM', 'OKTA', 'MS']  # from: https://www.nyse.com/listings_directory/stock
 
-companies = ['AAPL', 'NVDA', 'TSLA', 'LLY', 'XOM']
+companies = ['AAPL', 'NVDA', 'TSLA', 'LLY', 'XOM', 'UPST']
+# UPST
 
 
 def buyAndSell(company):
@@ -26,19 +27,20 @@ def buyAndSell(company):
 
     ema_21 = fmp.get_ema(company, 21)
     sma_20 = fmp.get_sma(company, 20)
+    sma_25 = fmp.get_sma(company, 25)
     sma_50 = fmp.get_sma(company, 50)
     sma_100 = fmp.get_sma(company, 100)
     sma_200 = fmp.get_sma(company, 200)
     rsi = fmp.get_rsi(company)
-    macd = aac.get_macd(company)
+    macd = 0  # aac.get_macd(company)
     price = fmp.get_price(company)
     print(ema_21, sma_20, sma_50,
           sma_100, sma_200, rsi, macd, price)
 
     should_buy = checkToBuy(ema_21, sma_20, sma_50,
-                            sma_100, sma_200, rsi, macd)
+                            sma_100, sma_200, rsi)
 
-    should_sell = checkToSell(price, sma_50)
+    should_sell = checkToSell(price, sma_25)
 
     def send_buy():
         return sms.send_sms("BUY " + company + " " + str(shares))

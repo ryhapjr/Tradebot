@@ -35,15 +35,15 @@ def checkMA(ma_50, ma_200):
         return states.hold
 
 
-def checkToBuy(ema_21, sma_20, sma_50, sma_100, sma_200, rsi, macd):
-    if ema_21 > sma_20 and sma_20 > sma_50 and ema_21 > sma_50 and sma_50 > sma_100 and sma_100 > sma_200 and rsi > 55 and macd > 0:
+def checkToBuy(ema_21, sma_20, sma_50, sma_100, sma_200, rsi):
+    if ema_21 > sma_20 and sma_20 > sma_50 and ema_21 > sma_50 and sma_50 > sma_100 and sma_100 > sma_200 and rsi > 55:  # and macd > 0:
         return True
 
     return False
 
 
-def checkToSell(price, sma_50):
-    if price <= sma_50:
+def checkToSell(price, sma_25):
+    if price <= sma_25:
         return True
     return False
 

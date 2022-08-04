@@ -32,5 +32,6 @@ def get_macd(stock):
         return 0
     yesterday = prev_weekday()
     dataKey = str(yesterday)
+    print(data['Technical Analysis: MACDEXT'])
     macd = data['Technical Analysis: MACDEXT'][dataKey]['MACD']
     return float(macd)
