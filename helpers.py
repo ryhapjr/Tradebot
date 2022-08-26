@@ -41,9 +41,19 @@ def checkToBuy(ema_21, sma_20, sma_50, sma_100, sma_200, rsi):
 
     return False
 
+def checkToBuy2(ema_21, sma_10,rsi, price)
+    if sma_10 > ema_21 and rsi > 50 and price > sma_10:
+        return True
+    return False
+
 
 def checkToSell(price, sma_25):
     if price <= sma_25:
+        return True
+    return False
+
+def checkToSell2(price, sma_20):
+    if price == sma_20:
         return True
     return False
 
