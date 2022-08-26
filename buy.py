@@ -31,7 +31,7 @@ def buy(company):
     rsi = fmp.get_rsi(company)
     price = fmp.get_price(company)
 
-    print(ema_21, sma_10,sma_20, price)
+    print(ema_21, sma_10,rsi, price)
 
     should_buy = checkToBuy2(ema_21, sma_10, rsi, price)
 
