@@ -26,14 +26,15 @@ def buy(company):
     logfile.write(message_temp.format("Checking Price for " + company))
 
 
-    ema_21 = fmp.get_ema(company, 21)
+    # ema_21 = fmp.get_ema(company, 21)
     sma_10 = fmp.get_sma(company, 10)
+    sma_50 = fmp.get_sma(company, 50)
     rsi = fmp.get_rsi(company)
     price = fmp.get_price(company)
 
-    print(ema_21, sma_10,rsi, price)
+    print(sma_10,sma_50,rsi, price)
 
-    should_buy = checkToBuy2(ema_21, sma_10, rsi, price)
+    should_buy = checkToBuy2(sma_10, sma_50, rsi, price)
 
 
     def send_buy():

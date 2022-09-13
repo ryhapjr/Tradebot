@@ -25,12 +25,12 @@ def sell(company):
     print("Checking Price for " + company)
     logfile.write(message_temp.format("Checking Price for " + company))
 
-    sma_20 = fmp.get_sma(company, 20)
+    sma_50 = fmp.get_sma(company, 50)
     price = fmp.get_price(company)
 
-    print(sma_20, price)
+    print(sma_50, price)
 
-    should_sell = checkToSell2(price, sma_20)
+    should_sell = checkToSell2(price, sma_50)
 
 
     def send_sell():
